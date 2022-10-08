@@ -8,7 +8,8 @@ use App\Models\Patient;
 use App\Models\PatientBill;
 use App\Models\Role;
 use App\Models\User;
-use PDF;
+// use PDF;
+use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -152,7 +153,8 @@ class PharmacyController extends Controller
             'outpatient' => $outpatient->service_price,
             'total' => 0,
         );
-        $print = \PDF::loadview('pharmacy.print', $data);
-        return $print->stream();
+        $print = PDF::loadview('pharmacy.print', $data);
+        // return $print->stream();
+        return $print->download('invoice.pdf');
     }
 }
